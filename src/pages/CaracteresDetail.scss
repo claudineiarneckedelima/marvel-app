@@ -1,0 +1,90 @@
+body {
+  background-color: #eee;
+}
+
+.caracteres-detail-container {
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+  margin: 0 auto;
+  text-align: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  .action{
+      position: absolute;
+      z-index: 2;
+      top: 12%;
+      left: 4%;
+      border-radius: 60px;
+      padding: 30px 20px;
+      border: 0;
+      font-size: 1.8rem;
+      color: #ed1d24;
+  }
+
+  .border-image {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+
+    background-color: #dcd6d6;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    transform: rotate(-5deg);
+    transform-origin: center;
+    width: 210px;
+    height: 210px;
+    animation: changeColor 5s ease-in-out infinite;
+    margin: 0 auto;
+
+    img {
+      height: 80%;
+      max-height: 200px;
+      border-radius: 5px;
+      margin: 20px;
+      transform: rotate(5deg);
+      transform-origin: center;
+    }
+
+    img:hover {
+      transform: scale(1.2) rotate(5deg);
+    }
+  }
+
+  .name {
+    line-height: 100px;
+    font-size: 2rem;
+    color: #ed1d24;
+    font-weight: bold;
+    letter-spacing: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    padding: 0 10%;
+    border-bottom: 1px solid #ed1d24;
+  }
+
+  .description {
+    font-size: 1.7rem;
+    color: #999;
+    letter-spacing: 1px;
+    overflow: hidden;
+    width: 100%;
+    text-align: justify;
+    padding: 30px;
+  }
+}
+
+@keyframes changeColor {
+  0% {
+    background-color: #faa0a3;
+  }
+  50% {
+    background-color: #ed1d24;
+  }
+  100% {
+    background-color: #faa0a3;
+  }
+}

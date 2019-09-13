@@ -1,23 +1,13 @@
-@font-face {
-  font-family: "Marvel Regular";
-  font-style: normal;
-  font-weight: 400;
-  src: url("../assets/fonts/Marvel-Regular.ttf");
-}
-
-* {
-  font-family: "Marvel Regular";
-}
 .caracteres-container {
   background-color: #eee;
   height: 100vh;
   padding: 0 20px;
 
-  .search-container{
+  .search-container {
     width: 100%;
     text-align: center;
 
-    .search{
+    .search {
       width: 50%;
       border: 20px;
       height: 40px;
@@ -29,7 +19,6 @@
       color: #ed1d24;
     }
   }
-
 
   ul {
     display: grid;
@@ -48,6 +37,7 @@
       flex-direction: row;
       padding: 0;
       margin-left: 5px;
+      cursor: pointer;
 
       .border-image {
         display: flex;
@@ -64,6 +54,7 @@
         margin-top: -5px;
         margin-left: -10px;
         margin-right: 20px;
+        animation: changeColor 5s ease-in-out infinite;
 
         img {
           height: 80%;
@@ -90,5 +81,17 @@
         text-overflow: ellipsis;
       }
     }
+  }
+}
+
+@keyframes changeColor {
+  0% {
+    background-color: #faa0a3;
+  }
+  50% {
+    background-color: #ed1d24;
+  }
+  100% {
+    background-color: #faa0a3;
   }
 }
