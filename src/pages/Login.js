@@ -12,7 +12,7 @@ export default function Login({ history }) {
         history.push(`/caracteres`);
       }, 3000);
     })();
-  }, []);
+  });
 
   return <div className="login-container">Logando ...</div>;
 }
