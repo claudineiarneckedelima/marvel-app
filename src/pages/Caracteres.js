@@ -4,6 +4,7 @@ import "./Caracteres.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { stateRdx } from "../services/rdx";
+import { ToastsContainer, ToastsStore } from "react-toasts";
 
 export default function Caracteres({ match, history }) {
   const [caracteresFilter, setCaracteresFilter] = useState([]);
@@ -17,19 +18,25 @@ export default function Caracteres({ match, history }) {
         history.push("/");
       }
 
-      let resopnse = stateRdx("LISTCARACTERES");
+      stateRdx("LISTCARACTERES").then(value=>{
+      if (value.status.trim() !== "Ok"){
+        ToastsStore.error(value.status+"Ocorreu um erro ao listar os dados");
+        setTimeout(() => {
+          history.push(`/login`);
+        }, 5000);
+      }
 
-      if (resopnse.caracteres.length == 0)
-        resopnse = stateRdx("SINCRONIZECARACTERES");
+      if (value.caracteres.length == 0)
+      value = stateRdx("SINCRONIZECARACTERES");
 
-      const filterList = resopnse.caracteres
-        .filter(value => value.name.toLowerCase().indexOf(filterValue) !== -1)
-        .map(value => value);
+      const filterList = value.caracteres
+        .filter(value2 => value2.name.toLowerCase().indexOf(filterValue) !== -1)
+        .map(value3 => value3);
       setCaracteresFilter(filterList);
 
-      console.log("caracteresFilter");
-      console.log(caracteresFilter);
-      console.log("caracteresFilter");
+      });
+
+      
     })();
   }, [filterValue]);
 
@@ -39,12 +46,21 @@ export default function Caracteres({ match, history }) {
   }
 
   function handleSync() {
-    stateRdx("SINCRONIZECARACTERES");
-    setFilterValue("response");
-    setLoading(true);
-    setTimeout(() => {
-      setFilterValue("");
-    }, 2000);
+    stateRdx("SINCRONIZECARACTERES").then(value => {
+      if (value.status.trim() === "Ok") {
+        ToastsStore.success("Dados sincronizados com sucesso");
+        setFilterValue("response");
+        setLoading(true);
+        setTimeout(() => {
+          setFilterValue("");
+        }, 2000);
+      } else {
+        ToastsStore.error("Dados não sincronizados, favor tente novamente");
+        setTimeout(() => {
+          history.push(`/login`);
+        }, 4000);
+      }
+    });
   }
 
   return (
@@ -77,12 +93,11 @@ export default function Caracteres({ match, history }) {
               );
             })}
           </ul>
-        ) : !loading ? (
+        ) : !loading && (
           <div className="empty">Nada Encontrado :(</div>
-        ) : (
-          <div className="wait">Aguarde ...</div>
         )}
       </div>
+      <ToastsContainer store={ToastsStore} />
     </div>
   );
 }

@@ -3,6 +3,8 @@ import "./CaracteresUpdate.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { stateRdx } from "../services/rdx";
+import { Link } from "react-router-dom";
+import { ToastsContainer, ToastsStore } from "react-toasts";
 
 export default function CaracteresUpdate({ match, history }) {
   const [image, setImage] = useState("");
@@ -17,23 +19,17 @@ export default function CaracteresUpdate({ match, history }) {
         history.push("/");
       }
 
-      const response = stateRdx("LISTCARACTERES");
+      stateRdx("LISTCARACTERES").then(value => {
+        setAllData(value.caracteres);
 
-      // console.log(response.caracteres.length , response.caracteres);
-      
-      // if (!response.caracteres.length) history.push(`/caracteres`);
+        const filterList = value.caracteres
+          .filter(value2 => value2.id == match.params.id)
+          .map(value3 => value3);
 
-      setAllData(response.caracteres);
-
-      const filterList = response.caracteres
-        .filter(value => value.id == match.params.id)
-        .map(value => value);
-
-      console.log(filterList);
-
-      setImage(filterList[0].thumbnail);
-      setName(filterList[0].name);
-      setDescription(filterList[0].description);
+        setImage(filterList[0].thumbnail);
+        setName(filterList[0].name);
+        setDescription(filterList[0].description);
+      });
     })();
   }, []);
 
@@ -48,22 +44,33 @@ export default function CaracteresUpdate({ match, history }) {
           thumbnail: value.thumbnail,
           name,
           description
-        }
+        };
       }
       return value;
     });
 
-    stateRdx("UPDATECARACTERES", obj);
+    const response = stateRdx("UPDATECARACTERES", obj);
 
-    setTimeout(() => {
-      history.push(`/caracteres`);
-    }, 1000);
+    response.then(value => {
+      if (value.status.trim() == "Ok") {
+        ToastsStore.success("Dados atualizados com sucesso");
+
+        setTimeout(() => {
+          history.push(`/caracteres/${match.params.id}`);
+        }, 3000);
+      } else
+        ToastsStore.error(
+          value.status + "Dados não atualizados, favor tente novamente"
+        );
+    });
   }
 
   return (
     <div className="caracteres-update-container">
       <div className="border-image">
-        <img src={image} alt={name} />
+        <Link to={`/caracteres/${match.params.id}`}>
+          <img src={image} alt={name} />
+        </Link>
       </div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="">Nome do personagem</label>
@@ -80,6 +87,7 @@ export default function CaracteresUpdate({ match, history }) {
         />
         <button type="submit">Atualizar</button>
       </form>
+      <ToastsContainer store={ToastsStore} />
     </div>
   );
 }

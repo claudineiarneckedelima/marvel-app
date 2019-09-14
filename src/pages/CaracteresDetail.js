@@ -3,6 +3,7 @@ import "./CaracteresDetail.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { stateRdx } from "../services/rdx";
+import { Link } from "react-router-dom";
 
 export default function CaracteresDetail({ match, history }) {
   const [caracteresFilterDetail, setCaracteresFilterDetail] = useState([]);
@@ -18,27 +19,15 @@ export default function CaracteresDetail({ match, history }) {
         history.push("/");
       }
 
-      const response = stateRdx("LISTCARACTERES");
-      const filterList = response.caracteres
-        .filter(value => value.id == match.params.id)
-        .map(value => value);
+      stateRdx("LISTCARACTERES").then(value => {
+        const filterList = value.caracteres
+          .filter(value2 => value2.id == match.params.id)
+          .map(value3 => value3);
 
-      setCaracteresFilterDetail(filterList[0]);
-      setCaracteresFilterDetailSeries(filterList[0].series);
+        setCaracteresFilterDetail(filterList[0]);
+        setCaracteresFilterDetailSeries(filterList[0].series);
+      });
 
-      console.log(filterList[0]);
-
-      setTimeout(() => {
-        console.log("====================================");
-        console.log(caracteresFilterDetail);
-        console.log("====================================");
-      }, 3000);
-
-      // {
-      //   caracteresFilter.series.map(value=>(
-      //     <li>{value.name}</li>
-      //   ))
-      // }
     })();
   }, []);
   return (
@@ -50,10 +39,12 @@ export default function CaracteresDetail({ match, history }) {
         <FontAwesomeIcon icon={faEdit} />
       </button>
       <div className="border-image">
-        <img
-          src={caracteresFilterDetail.thumbnail}
-          alt={caracteresFilterDetail.name}
-        />
+        <Link to="/caracteres">
+          <img
+            src={caracteresFilterDetail.thumbnail}
+            alt={caracteresFilterDetail.name}
+          />
+        </Link>
       </div>
       <div className="name">{caracteresFilterDetail.name}</div>
 
