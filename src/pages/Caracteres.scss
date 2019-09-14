@@ -4,25 +4,49 @@
   padding: 0 20px;
 
   .search-container {
-    width: 100%;
+    width: 101.5%;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: row;
+
+    button {
+      height: 60px;
+      border: 0px;
+      background-color: #fff;
+      font-size: 1.2rem;
+      color: #ed1d24;
+      padding: 15px 20px;
+      border-radius: 5px;
+      line-height: 40px;
+      margin-top: 20px;
+    }
 
     .search {
-      width: 50%;
+      width: 70%;
       border: 20px;
       height: 40px;
       padding: 30px 20px;
       border-radius: 5px;
       background-color: #fff;
-      margin: 20px;
+      margin: 20px 0px 20px 20px;
       font-size: 1.2rem;
       color: #ed1d24;
+      @media only screen and (max-width: 700px) {
+        width: 100%;
+      }
     }
   }
 
   ul {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+
+    @media only screen and (max-width: 700px) {
+      grid-template-columns: repeat(1, minmax(150px, 1fr));
+    }
+
     grid-gap: 20px;
 
     li {
@@ -57,8 +81,11 @@
         animation: changeColor 5s ease-in-out infinite;
 
         img {
-          height: 80%;
-          max-height: 100px;
+          width: 110px;
+          height: 110px;
+          max-width: 90px;
+          max-height: 90px;
+          object-fit: cover;
           border-radius: 5px;
           margin: 10px;
           transform: rotate(5deg);
@@ -71,7 +98,11 @@
       }
 
       .name {
-        line-height: 100px;
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+        flex-direction: column;
+
         font-size: 2rem;
         color: #ed1d24;
         font-weight: bold;
@@ -79,8 +110,29 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        white-space: normal;
+
+        @media only screen and (max-width: 400px) {
+          font-size: 1.2rem;
+          white-space: normal;
+        }
       }
     }
+  }
+
+  .empty, .wait{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    height: calc(100% - 100px);
+    font-size: 2rem;
+    color: #ed1d24;
+
   }
 }
 
