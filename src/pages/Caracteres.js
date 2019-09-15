@@ -38,7 +38,7 @@ export default function Caracteres({ history }) {
 
       
     })();
-  }, [filterValue]);
+  }, [filterValue, history]);
 
   function handleChange(e) {
     setLoading(false);

@@ -29,13 +29,14 @@ export default function CaracteresUpdate({ match, history }) {
         setDescription(filterList[0].description);
       });
     })();
-  }, [match.params.id]);
+  }, [match.params.id, history]);
 
   function handleSubmit(e) {
     e.preventDefault();
+    
 
     const obj = allData.map(value => {
-      if (value.id === match.params.id) {
+      if (parseInt(value.id) === parseInt(match.params.id)) {
         return {
           id: value.id,
           series: value.series,

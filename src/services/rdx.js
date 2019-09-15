@@ -61,5 +61,6 @@ async function updateCaracteres(obj) {
     caracteres: obj,
     status: "Ok"
   }));
+  
   return await JSON.parse(localStorage.getItem("data"));
 }

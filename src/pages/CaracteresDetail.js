@@ -29,7 +29,7 @@ export default function CaracteresDetail({ match, history }) {
       });
 
     })();
-  }, [match.params.id]);
+  }, [match.params.id, history]);
   return (
     <div className="caracteres-detail-container">
       <button
