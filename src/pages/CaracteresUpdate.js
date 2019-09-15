@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./CaracteresUpdate.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { stateRdx } from "../services/rdx";
 import { Link } from "react-router-dom";
 import { ToastsContainer, ToastsStore } from "react-toasts";
@@ -23,7 +21,7 @@ export default function CaracteresUpdate({ match, history }) {
         setAllData(value.caracteres);
 
         const filterList = value.caracteres
-          .filter(value2 => value2.id == match.params.id)
+          .filter(value2 => parseInt(value2.id) === parseInt(match.params.id))
           .map(value3 => value3);
 
         setImage(filterList[0].thumbnail);
@@ -31,13 +29,13 @@ export default function CaracteresUpdate({ match, history }) {
         setDescription(filterList[0].description);
       });
     })();
-  }, []);
+  }, [match.params.id]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     const obj = allData.map(value => {
-      if (value.id == match.params.id) {
+      if (value.id === match.params.id) {
         return {
           id: value.id,
           series: value.series,
@@ -52,7 +50,7 @@ export default function CaracteresUpdate({ match, history }) {
     const response = stateRdx("UPDATECARACTERES", obj);
 
     response.then(value => {
-      if (value.status.trim() == "Ok") {
+      if (value.status.trim() === "Ok") {
         ToastsStore.success("Dados atualizados com sucesso");
 
         setTimeout(() => {

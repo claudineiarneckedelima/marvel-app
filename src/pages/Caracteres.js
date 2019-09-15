@@ -6,7 +6,7 @@ import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { stateRdx } from "../services/rdx";
 import { ToastsContainer, ToastsStore } from "react-toasts";
 
-export default function Caracteres({ match, history }) {
+export default function Caracteres({ history }) {
   const [caracteresFilter, setCaracteresFilter] = useState([]);
   const [filterValue, setFilterValue] = useState("");
   const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ export default function Caracteres({ match, history }) {
         }, 5000);
       }
 
-      if (value.caracteres.length == 0)
+      if (value.caracteres.length === 0)
       value = stateRdx("SINCRONIZECARACTERES");
 
       const filterList = value.caracteres

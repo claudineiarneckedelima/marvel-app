@@ -21,7 +21,7 @@ export default function CaracteresDetail({ match, history }) {
 
       stateRdx("LISTCARACTERES").then(value => {
         const filterList = value.caracteres
-          .filter(value2 => value2.id == match.params.id)
+          .filter(value2 => parseInt(value2.id) === parseInt(match.params.id))
           .map(value3 => value3);
 
         setCaracteresFilterDetail(filterList[0]);
@@ -29,7 +29,7 @@ export default function CaracteresDetail({ match, history }) {
       });
 
     })();
-  }, []);
+  }, [match.params.id]);
   return (
     <div className="caracteres-detail-container">
       <button
